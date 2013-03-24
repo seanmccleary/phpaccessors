@@ -12,5 +12,4 @@ Accessor methods must be of the form "getPropertyName" or "get_property_name".
 i.e., for a non-existant property called "age" you could define
 an accessor method called getAge or get_age.
 
-For an example, see the included test.php, which uses the Person and Employee
-clases.
+For an example, see the included test.php and Person.php files.
