@@ -1,7 +1,7 @@
 <?php
 /**
  * A class for blah
- * @property xfavoriteColor
+ * @property favoriteColor
  */
 class Person
 {
@@ -9,23 +9,24 @@ class Person
 
 	public $name;
 
-	public $age;
-
 	private $_favoriteColor;
 
-	public function __construct($name, $age) {
+	private $_age;
 
-		$this->name = $name;
-		$this->age = $age;
-		$this->favoriteColor = 'green';
-	}
-
-	protected function setFavoriteColor($value) {
+	public function setFavoriteColor($value) {
 		$this->_favoriteColor = $value;
 	}
 
 	public function getFavoriteColor() {
 		return $this->_favoriteColor;
+	}
+
+	public function setAge($value) {
+		$this->_age = $value;
+	}
+
+	public function getAge() {
+		return $this->_age;
 	}
 
 	public function sayName() {

@@ -1,8 +1,4 @@
 <?php
-class DocPropertyNotSetException extends Exception 
-{
-}
-
 /**
  * A trait to make PHP classes behave stricter and implements properties.
  *
@@ -72,17 +68,12 @@ trait AccessorsTrait
      */
     public function __set($name, $value) {
 
-        try {
-            $method = $this->_findAccessorMethod($name, false);
-            if ($method !== null) {
-                $method->invoke($this, $value);
-            }
-            else {
-                trigger_error("No such property: $name", E_USER_ERROR);
-            }
+        $method = $this->_findAccessorMethod($name, false);
+        if ($method !== null) {
+            $method->invoke($this, $value);
         }
-        catch(DocPropertyNotSetException $e) {
-            trigger_error($e->getMessage(), E_USER_ERROR);
+        else {
+            throw new NoSuchPropertyException("No such property: $name", E_USER_ERROR);
         }
     }
 
@@ -91,17 +82,25 @@ trait AccessorsTrait
      */
     public function __get($name) {
 
-        try {
-            $method = $this->_findAccessorMethod($name, true);
-            if ($method !== null) {
-                return $method->invoke($this);
-            }
-            else {
-                trigger_error("No such property: $name", E_USER_ERROR);
-            }
+        $method = $this->_findAccessorMethod($name, true);
+        if ($method !== null) {
+            return $method->invoke($this);
         }
-        catch(DocPropertyNotSetException $e) {
-            trigger_error($e->getMessage(), E_USER_ERROR);
+        else {
+            throw new NoSuchPropertyException("No such property: $name", E_USER_ERROR);
         }
     }
 }
+
+/**
+ * Thrown when one tries to use an accessor which was not
+ * defined with an @property PHPDoc tag
+ */
+class DocPropertyNotSetException extends Exception  {} 
+
+/**
+ * Throw when one tries to set a property on an object
+ * which was not defined in its class, and there is
+ * no accessor for it
+ */
+class NoSuchPropertyException extends Exception { }
