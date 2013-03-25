@@ -73,7 +73,7 @@ trait AccessorsTrait
             $method->invoke($this, $value);
         }
         else {
-            throw new NoSuchPropertyException("No such property: $name", E_USER_ERROR);
+            throw new NoSuchPropertyException("No such property: $name");
         }
     }
 
@@ -87,7 +87,7 @@ trait AccessorsTrait
             return $method->invoke($this);
         }
         else {
-            throw new NoSuchPropertyException("No such property: $name", E_USER_ERROR);
+            throw new NoSuchPropertyException("No such property: $name");
         }
     }
 }
